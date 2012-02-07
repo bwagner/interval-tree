@@ -6,7 +6,7 @@ package org.arabidopsis.interval;
 // by CLR.
 
 // This implementation also can take in a StatisticUpdate instance to
-// maintain auxillary information for each RbNode.  We call update()
+// maintain auxiliary information for each RbNode.  We call update()
 // whenever an RbNode is inserted, in two phases:
 //
 // 1.  Insertion as a leaf.
@@ -19,9 +19,9 @@ import org.apache.log4j.Logger;
 
 public class RbTree {
     RbNode root;
-    RbNode NIL = RbNode.NIL;
-    StatisticUpdate updater;
-    Logger logger;
+    private final RbNode NIL = RbNode.NIL;
+    private final StatisticUpdate updater;
+    final Logger logger;
 
     public RbTree(StatisticUpdate updater) {
 	this.root = NIL;
