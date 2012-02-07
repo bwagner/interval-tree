@@ -40,8 +40,9 @@ public class RbTreeTest {
     @Test
     public void testTreeWithRootColorDamageIsntValid() {
 	this.tree.insert(new RbNode(5));
-	RbNode node = this.tree.get(5);
+	final RbNode node = this.tree.get(5);
 	node.color = RbNode.RED;
+	this.tree.logger.warn("Following log entry expected to be: 'root color is wrong'");
 	assertFalse(this.tree.isValid());
     }
 
@@ -63,6 +64,7 @@ public class RbTreeTest {
 	}
 	assertTrue(this.tree.isValid());
 	intentionallyColorAllNodesBlack(this.tree.root);
+	this.tree.logger.warn("Following log entry expected to be: 'black height unbalanced'");
 	assertFalse(this.tree.isValid());
     }
 
@@ -73,8 +75,8 @@ public class RbTreeTest {
 
     @Test
     public void testConstruction() {
-	RbNode n1 = new RbNode(42);
-	RbNode n2 = new RbNode(43);
+	final RbNode n1 = new RbNode(42);
+	final RbNode n2 = new RbNode(43);
 	tree.insert(n1);
 	tree.insert(n2);
 	assertEquals(n1, tree.get(42));
@@ -102,10 +104,9 @@ public class RbTreeTest {
 
     @Test
     public void testTreeInsert() {
-	RbNode n1, n2, n3;
-	n1 = new RbNode(1);
-	n2 = new RbNode(2);
-	n3 = new RbNode(3);
+	final RbNode n1 = new RbNode(1);
+	final RbNode n2 = new RbNode(2);
+	final RbNode n3 = new RbNode(3);
 	tree.treeInsert(n1);
 	tree.treeInsert(n2);
 	tree.treeInsert(n3);
@@ -121,10 +122,9 @@ public class RbTreeTest {
 
     @Test
     public void testRotationLeft() {
-	RbNode n1, n2, n3;
-	n1 = new RbNode(1);
-	n2 = new RbNode(2);
-	n3 = new RbNode(3);
+	final RbNode n1 = new RbNode(1);
+	final RbNode n2 = new RbNode(2);
+	final RbNode n3 = new RbNode(3);
 	tree.treeInsert(n1);
 	tree.treeInsert(n2);
 	tree.treeInsert(n3);
@@ -169,7 +169,7 @@ public class RbTreeTest {
 
     @Test
     public void testSuccessorTraversal() {
-	int BIGNUMBER = 1000;
+	final int BIGNUMBER = 1000;
 	for (int i = 0; i < BIGNUMBER; i++) {
 	    tree.insert(new RbNode(i));
 	}
@@ -187,7 +187,7 @@ public class RbTreeTest {
 
     @Test
     public void testPredecessorTraversal() {
-	int BIGNUMBER = 1000;
+    final int BIGNUMBER = 1000;
 	for (int i = 0; i < BIGNUMBER; i++) {
 	    tree.insert(new RbNode(i));
 	}
@@ -204,12 +204,12 @@ public class RbTreeTest {
 
     @Test
     public void testNullPredecessor() {
-	int BIGNUMBER = 1000;
+	final int BIGNUMBER = 1000;
 	for (int i = 0; i < BIGNUMBER; i++) {
 	    tree.insert(new RbNode(i));
 	}
 
-	RbNode node = tree.get(0);
+	final RbNode node = tree.get(0);
 	assertTrue(tree.predecessor(node).isNull());
 	assertTrue(this.tree.isValid());
     }
@@ -217,12 +217,12 @@ public class RbTreeTest {
 
     @Test
     public void testNullSuccessor() {
-	int BIGNUMBER = 1000;
+    final int BIGNUMBER = 1000;
 	for (int i = 0; i < BIGNUMBER; i++) {
 	    tree.insert(new RbNode(i));
 	}
 
-	RbNode node = tree.get(BIGNUMBER-1);
+	final RbNode node = tree.get(BIGNUMBER-1);
 	assertTrue(tree.successor(node).isNull());
 	assertTrue(this.tree.isValid());
     }
@@ -230,10 +230,9 @@ public class RbTreeTest {
 
     @Test
     public void testRotationRight() {
-	RbNode n1, n2, n3;
-	n1 = new RbNode(1);
-	n2 = new RbNode(2);
-	n3 = new RbNode(3);
+	final RbNode n1 = new RbNode(1);
+	final RbNode n2 = new RbNode(2);
+	final RbNode n3 = new RbNode(3);
 	tree.treeInsert(n3);
 	tree.treeInsert(n2);
 	tree.treeInsert(n1);
@@ -290,7 +289,7 @@ public class RbTreeTest {
 
 
     private void testSizeAndHeightWithDuplicateKey(int n) {
-	int arbitraryKey = 42;
+	final int arbitraryKey = 42;
 	for (int i = 1; i <= n; i++) {
 	    tree.insert(new RbNode(arbitraryKey));
 	}
