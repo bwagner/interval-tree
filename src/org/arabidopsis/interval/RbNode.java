@@ -3,7 +3,7 @@ package org.arabidopsis.interval;
 
 
 public class RbNode {
-    public int key;
+    public final int key;
     public boolean color;
     public RbNode parent;
     public RbNode left;
@@ -13,6 +13,7 @@ public class RbNode {
     public static boolean RED = true;
 
     private RbNode() {
+    	key = -1;
 	// Default constructor is only meant to be used for the
 	// construction of the NIL node.
     }
