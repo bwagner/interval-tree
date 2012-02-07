@@ -3,9 +3,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+class LoggingSuspender {
+	interface Action {
+		public void doit();
+	}
+	
+	public static void performAction(final Logger theLogger, final Action theAction){
+		final Level previousLevel = theLogger.getLevel();
+		theLogger.setLevel(Level.OFF);
+		theAction.doit();
+		theLogger.setLevel(previousLevel);
+	}
+}
 
 
 public class RbTreeTest {
@@ -42,8 +57,16 @@ public class RbTreeTest {
 	this.tree.insert(new RbNode(5));
 	final RbNode node = this.tree.get(5);
 	node.color = RbNode.RED;
-	this.tree.logger.warn("Following log entry expected to be: 'root color is wrong'");
-	assertFalse(this.tree.isValid());
+	
+	LoggingSuspender.performAction(this.tree.logger, new LoggingSuspender.Action(){
+
+		@Override
+		public void doit() {
+			tree.logger.warn("haha");
+			assertFalse(RbTreeTest.this.tree.isValid());
+		}
+	});
+	
     }
 
 
@@ -64,8 +87,15 @@ public class RbTreeTest {
 	}
 	assertTrue(this.tree.isValid());
 	intentionallyColorAllNodesBlack(this.tree.root);
-	this.tree.logger.warn("Following log entry expected to be: 'black height unbalanced'");
-	assertFalse(this.tree.isValid());
+	
+	LoggingSuspender.performAction(this.tree.logger, new LoggingSuspender.Action(){
+
+		@Override
+		public void doit() {
+			assertFalse(RbTreeTest.this.tree.isValid());
+		}
+	});
+	
     }
 
 
